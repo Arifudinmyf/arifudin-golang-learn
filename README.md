@@ -25,19 +25,24 @@ go mod tidy
 go mod download
 ```
 
+# Check Migrate
+```bash
+ls $(go env GOPATH)/bin | grep migrate
+
+```
+
 # Running migrate 
 ```bash
 migrate -path db/migrations -database "postgres://postgres:12345@localhost:5432/postgres?sslmode=disable" up
 ```
-# atau jika menggunakan vendotr
+# atau jika menggunakan vendor
 ```bash
     #### a. build vendor tanpa run
 
-    go build -mod=vendor
+    go build -mod=vendor ./cmd/app
     #### b. Build dan running projec
 
-    go run -mod=vendor main.go
-
+    go run -mod=vendor ./cmd/app/main.go
 ```
 
 # Jalankan Project
@@ -89,7 +94,7 @@ go install github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 ## Export go Path
 ```bash
 export PATH=$PATH:$(go env GOPATH)/bin
-````
+```
 
 ## Buat Migrasi database
 ##### membuat dua file SQL migrasi baru dengan timestamp otomatis di folder migrations/, siap untuk kamu isi dengan query CREATE dan DROP.
@@ -98,6 +103,8 @@ migrate create -ext sql -dir db/migrations create_users_table
 ```
 ```bash
 migrate -version
+grep confluent go.mod
+
 go clean -modcache
 ```
 
