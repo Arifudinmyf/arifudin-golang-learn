@@ -78,14 +78,6 @@ project-root/
 | ✅ Saat **code review atau distribusi source**          | Orang lain bisa build tanpa butuh akses internet ke repo dependency.      |
 
 ```
-#### a. build vendor tanpa run
-```bash
-go build -mod=vendor
-```
-#### b. Build dan running projec
-```bash
-go run -mod=vendor main.go
-```
 
 # Install Global Migration CLI
 ```bash
