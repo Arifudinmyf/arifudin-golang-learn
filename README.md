@@ -25,9 +25,30 @@ go mod tidy
 go mod download
 ```
 
+# Running migrate 
+```bash
+migrate -path db/migrations -database "postgres://postgres:12345@localhost:5432/postgres?sslmode=disable" up
+```
+# atau jika menggunakan vendotr
+```bash
+    #### a. build vendor tanpa run
+
+    go build -mod=vendor
+    #### b. Build dan running projec
+
+    go run -mod=vendor main.go
+
+```
+
 # Jalankan Project
 ```bash
 go run main.go
+```
+
+# Menyalin semua dependency ke folder /vendor
+#### ketika deploy atau run offline bisa berjalan
+```bash
+go mod vendor
 ```
 
 # Menyalin semua dependency ke folder /vendor
@@ -65,11 +86,19 @@ go run -mod=vendor main.go
 ```bash
 go install github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 ```
+## Export go Path
+```bash
+export PATH=$PATH:$(go env GOPATH)/bin
+````
 
 ## Buat Migrasi database
 ##### membuat dua file SQL migrasi baru dengan timestamp otomatis di folder migrations/, siap untuk kamu isi dengan query CREATE dan DROP.
 ```bash
-migrate create -ext sql -dir migrations create_users_table
+migrate create -ext sql -dir db/migrations create_users_table
+```
+```bash
+migrate -version
+go clean -modcache
 ```
 
 # CRUD Golang + Fiber + PostgreSQL + Confluent Kafka + golang-migrate
@@ -110,4 +139,23 @@ crud-fiber-postgres-kafka/
 │ ├── producer.go
 │ └── consumer.go
 └── README.md
+```
+
+## Buat folder
+```bash
+mkdir -p arifudin-golang-learn/{cmd,internal/{config,db,models,repository,handlers,kafka},migrations}
+```
+## Buat file
+```bash
+touch .env.example docker-compose.yml
+
+touch internal/config/config.go
+touch internal/db/postgres.go
+touch internal/models/user.go
+touch internal/repository/user_repo.go
+touch internal/handlers/user_handler.go
+touch internal/kafka/producer.go
+touch internal/kafka/consumer.go
+
+touch cmd/app/main.go
 ```
